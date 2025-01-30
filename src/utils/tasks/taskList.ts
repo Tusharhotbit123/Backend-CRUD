@@ -1,6 +1,6 @@
 import { List } from "./listType";
 
-export const taskList: List[] = [
+export let taskList: List[] = [
   {
     id: 1,
     title: "Complete TypeScript Project",
