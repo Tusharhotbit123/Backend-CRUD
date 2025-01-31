@@ -3,11 +3,19 @@ import { List } from "../utils/tasks/listType";
 import { taskList } from "../utils/tasks/taskList";
 
 export const getTasks = (req: Request, res: Response) => {
-  res.json(taskList);
+  res.status(200).json(taskList);
 };
 
 export const createTasks = (req: Request, res: Response) => {
   const { title, status } = req.body;
+
+  if (!title || !status) {
+    res
+      .status(400)
+      .json({ message: "Invalid request!,please check the details" });
+
+    return;
+  }
 
   const newObj: List = {
     id: taskList.length + 1,
@@ -19,14 +27,27 @@ export const createTasks = (req: Request, res: Response) => {
 
   taskList.push(newObj);
 
-  res.json(taskList);
+  res.status(200).json(taskList);
 };
 
 export const updateTask = (req: Request, res: Response) => {
-  const {id}=req.params
-  const {title, status } = req.body;
+  const { id } = req.params;
+  const { title, status } = req.body;
 
-  const obj: List | undefined = taskList.find(item=>item.id===Number(id));
+  if (!id) {
+    res.status(400).send({ message: "Please provide a valid id!" });
+    return;
+  }
+
+  const obj: List | undefined = taskList.find((item) => item.id === Number(id));
+
+  if (!obj) {
+    res
+      .status(500)
+      .json({ message: "There is no given task as such for update!" });
+
+    return;
+  }
 
   if (obj) {
     obj.title = title;
@@ -34,7 +55,7 @@ export const updateTask = (req: Request, res: Response) => {
     obj.updatedAt = new Date();
   }
 
-  res.json({
+  res.status(200).json({
     message: "the task has been successfully updated",
     obj,
     taskList,
@@ -44,11 +65,23 @@ export const updateTask = (req: Request, res: Response) => {
 export const deleteTask = (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const numericId=Number(id)
+  if (!id) {
+    res.status(400).json({ message: "Please check for valid id!" });
+    return;
+  }
 
-  const idx = taskList.findIndex(item=>item.id===numericId);
+  const numericId = Number(id);
+
+  const idx = taskList.findIndex((item) => item.id === numericId);
+
+  if (!idx) {
+    res.status(500).json({ message: "There is no task with the given id!" });
+    return;
+  }
 
   taskList.splice(idx, 1);
 
-  res.json({ message: "the task has been deleted successfully", taskList });
+  res
+    .status(200)
+    .json({ message: "the task has been deleted successfully", taskList });
 };

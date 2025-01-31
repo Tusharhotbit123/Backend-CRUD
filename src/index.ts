@@ -1,10 +1,13 @@
-import express, { Request, Response, NextFunction as Next } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import userRoutes from "./routes/taskRoutes";
+import connection from "./config/connection";
 
+dotenv.config();
 const app = express();
 app.use(express.json());
-dotenv.config();
+
+connection();
 
 app.use("/", userRoutes);
 

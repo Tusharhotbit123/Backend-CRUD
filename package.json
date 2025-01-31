@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build",
     "start": "node ./dist/index.js",
-    "dev": "nodemon ./src/index.ts"
+    "dev": "nodemon ./src/index.ts",
+    "format":"prettier --write ./src/."
   },
   "author": "Tushar Sharma",
   "license": "ISC",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "nodemon": "^3.1.9",
+    "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }
