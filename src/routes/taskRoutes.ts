@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.get("/tasks", getTasks);
-router.post("/createtasks", createTasks);
-router.put("/update/:id", updateTask);
-router.delete("/delete/:id", deleteTask);
+router.post("/tasks/createtask", createTasks);
+router.put("/tasks/update/:id", updateTask);
+router.delete("/tasks/delete/:id", deleteTask);
 export default router;
