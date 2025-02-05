@@ -8,6 +8,19 @@ class taskServices {
 
     return tasks;
   }
+
+  static async createTask(title:string,status:string,id:string){
+
+    const task=await prisma.tasks.create({data:{authorId:id,title,status}})
+
+    if(!task) throw new Error("Could not create task!")
+    
+      return task
+
+  }
+
+
+
 }
 
 export default taskServices;

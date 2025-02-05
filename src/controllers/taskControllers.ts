@@ -20,8 +20,37 @@ class taskControllers {
     }
   }
 
-  static async createTask() {}
-  static async updateTask() {}
+  static async createTask(req: Request, res: Response) {
+    try {
+
+      const user=req.user as IUser
+      const {title,status}=req.body
+
+      const task=await taskServices.createTask(title,status,user.id)
+
+      res.status(200).json({message:"The task creation was successful!",task})
+
+
+    } catch (err) {
+      const error = err as Error;
+      res
+        .status(500)
+        .json({ message: "Interval server error!", error: error.message });
+    }
+  }
+  static async updateTask(req:Request,res:Response) {
+    try{
+
+      const user=req.user as IUser
+      const {title,status}=req.body
+
+      
+
+    }catch(err){
+      const error=err as Error
+      res.status(500).json({message:"Internal server error!",error:error.message})
+    }
+  }
 
   static async deleteTask() {}
 }

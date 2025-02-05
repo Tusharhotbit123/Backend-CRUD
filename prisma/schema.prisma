@@ -24,17 +24,14 @@ model Refreshtoken{
   author User  @relation(fields:[authorId],references: [id])
 }
 
-enum Status{
-  complete
-  incomplete
-}
+
 
 model Tasks{
   id String @id @default(uuid())
   authorId String?
   author User? @relation(fields:[authorId],references: [id])
   title String
-  status Status
+  status String 
   createdat DateTime @default(now())
-  updatedat DateTime 
+  updatedat DateTime  @updatedAt
 }
