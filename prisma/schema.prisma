@@ -13,4 +13,12 @@ model User{
   name String
   email String @unique @default("email.example.com")
   password String @default("password")
+  token Refreshtoken?
+}
+
+model Refreshtoken{
+  id String @id @default(uuid())
+  authorId String @unique
+  token String
+  author User  @relation(fields:[authorId],references: [id])
 }
