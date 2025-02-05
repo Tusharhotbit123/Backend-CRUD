@@ -14,6 +14,7 @@ model User{
   email String @unique @default("email.example.com")
   password String @default("password")
   token Refreshtoken?
+  tasks Tasks[]
 }
 
 model Refreshtoken{
@@ -21,4 +22,19 @@ model Refreshtoken{
   authorId String @unique
   token String
   author User  @relation(fields:[authorId],references: [id])
+}
+
+enum Status{
+  complete
+  incomplete
+}
+
+model Tasks{
+  id String @id @default(uuid())
+  authorId String?
+  author User? @relation(fields:[authorId],references: [id])
+  title String
+  status Status
+  createdat DateTime @default(now())
+  updatedat DateTime 
 }
